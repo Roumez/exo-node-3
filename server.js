@@ -2,13 +2,13 @@
 
 // import de express
 const express = require('express')
+// import de axios
 const axios = require('axios')
 
 // definition de notre app
 const app = express()
 
 // le port d'écoute de notre serveur
-const LOCAL_IP = '192.168.0.14'
 const PORT = 3333
 
 const asyncTask = (id, timeout, willFulFilled) => {
