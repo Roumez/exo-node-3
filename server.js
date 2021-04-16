@@ -1,81 +1,71 @@
-
-
 // import de express
 const express = require('express')
-// import de axios
-const axios = require('axios')
 
 // definition de notre app
 const app = express()
 
 // le port d'écoute de notre serveur
-const PORT = 3333
+const IP_LOOPBACK = 'localhost'
+const PORT = 3000
 
-const asyncTask = (id, timeout, willFulFilled) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (willFulFilled === true) {
-        // ce console.log simule un side effect
-        console.log(`Log: task${id} done after ${timeout} seconds`)
-        // la valeur de retour est contenu dans le resolve
-        resolve(`result from task${id}`)
-      } else {
-        reject(new Error(`faillure from task${id}`))
-      }
-    }, timeout * 1000)
-  })
+const add = async () => {
+  try {
+    app.get('/calc/add/:nb1/:nb2', (req, res) => {
+      res.send(`Hello, voici la réponse à votre calcul ${nb1 + nb2} `)
+      const jsObject = JSON.parse(add)
+    })
+  } catch (e) {
+    console.log(e.message)
+  }
 }
-// définition d'une route '/', la route par défaut.
-// lorsqu'un client effectuera une requête sur ce endpoint
-// on lui retournera le texte 'Hello World!' via la callback/
-// Cette callback est aussi appellée 'handler function'
-app.get('/', (req, res) => {
-  res.send('Welcome to my first second express server')
-})
+add()
 
-app.get('/people/:peopleId', async (req, res) => {
+const sub = async () => {
   try {
-    const id = req.params.peopleId
-    const response = await axios.get(`https://swapi.dev/api/people/${id}`)
-    res.send(response.data)
+    app.get('/calc/sub/:nb1/:nb2', (req, res) => {
+      res.send(`Hello, voici la réponse à votre calcul ${nb1 - nb2} `)
+    })
   } catch (e) {
-    res.send(e.message)
+    console.log(e.message)
   }
-})
+}
+sub()
 
-app.get('/starships/:starId', async (req, res) => {
+const mul = async () => {
   try {
-    const id = req.params.starId
-    const response = await axios.get(`https://swapi.dev/api/starships/${id}`)
-    res.send(response.data)
+    app.get('/calc/mul/:nb1/:nb2', (req, res) => {
+      res.send(`Hello, voici la réponse à votre calcul ${nb1 * nb2} `)
+    })
   } catch (e) {
-    res.send(e.message)
+    console.log(e.message)
   }
-})
+}
+mul()
 
-app.get('/wiki/:word', async (req, res) => {
+const div = async () => {
   try {
-    const word = req.params.word
-    const response = await axios.get(`https://en.wikipedia.org/wiki/${word}`)
-    res.send(response.data)
+    app.get('/calc/div/:nb1/:nb2', (req, res) => {
+      res.send(`Hello, voici la réponse à votre calcul ${nb1 / nb2} `)
+    })
   } catch (e) {
-    res.send(e.message)
+    console.log(e.message)
   }
-})
+}
+div()
+
+const mod = async () => {
+  try {
+    app.get('/calc/mod/:nb1/:nb2', (req, res) => {
+      res.send(`Hello, voici la réponse à votre calcul ${nb1 % nb2} `)
+    })
+  } catch (e) {
+    console.log(e.message)
+  }
+}
+mod()
 
 
-app.get('/timebomb/:seconds', async (req, res) => {
-  await asyncTask(1, req.params.seconds, true)
-  res.send(`Boom after ${req.params.seconds}`)
-})
-
-app.get('/hello/:firstName', (req, res) => {
-  res.send(`Hello ${req.params.firstName}`)
-})
-
-
-// démarrage de notre serveur sur le port 3333
-app.listen(PORT, LOCAL_IP, () => {
-  //exécution d'un affichage au lacement du serveur.
-  console.log(`Example app listening at http://${LOCAL_IP}:${PORT}`)
+// start the server
+app.listen(PORT, IP_LOOPBACK, () => {
+  console.log(`Example app listening at http://${IP_LOOPBACK}:${PORT}`)
 })
