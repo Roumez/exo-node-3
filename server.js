@@ -8,9 +8,16 @@ const app = express()
 const IP_LOOPBACK = 'localhost'
 const PORT = 3000
 
+// Correction: il faut mettre app.get('/calc/add/:nb1/:nb2') au top level au lieu de le cacher
+// derriere la une fonction add
 const add = async () => {
   try {
     app.get('/calc/add/:nb1/:nb2', (req, res) => {
+      // Correction: Tu dois récupérer nb1 ou nb2 via:
+      // const nb1 = req.params.nb1 et const nb2 = req.params.nb2
+      // Correction:
+      // Ton programme ne peut pas fonctionner nb1 et nb2 sont indéfinis sans
+      // const nb1 = req.params.nb1 et const nb2 = req.params.nb2
       res.send(`Hello, voici la réponse à votre calcul ${nb1 + nb2} `)
       const jsObject = JSON.parse(add)
     })
@@ -63,7 +70,6 @@ const mod = async () => {
   }
 }
 mod()
-
 
 // start the server
 app.listen(PORT, IP_LOOPBACK, () => {

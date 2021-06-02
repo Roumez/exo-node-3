@@ -38,7 +38,7 @@ const main = async () => {
     console.log(nbUrl.length)
     const nbImg = dom.window.document.querySelectorAll('img')
     console.log(nbImg.length)
-    addJson(titleTag, nbUrl, nbImg)
+    addJson(titleTag, nbUrl, nbImg) // Correction: il manque un await ici attention addJson est asynchrone
   } catch (e) {
     console.log(e.message)
   }
